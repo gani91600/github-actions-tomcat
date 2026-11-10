@@ -1,0 +1,26 @@
+name: Deploy Web App to Tomcat
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build WAR using Maven
+        run: mvn clean package
+
+      - name: Verify WAR file
+        run: ls -lh target/ROOT.war
